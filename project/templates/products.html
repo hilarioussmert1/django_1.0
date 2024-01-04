@@ -1,0 +1,53 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_tags%}
+
+{% block title %}
+<h2>Товары</h2>j
+{% endblock title%}
+
+{% block content %}
+<h2>{{ time }}</h2>
+<form action="" method="get"d>
+    {% csrf_token %}
+    {{ filterset.form.as_p}}
+    <input type="submit" value="НАЙТИ"/>
+</form>
+{% if products %}
+<table>
+        <tr>
+            <td>Название</td>
+            <td>Описание</td>
+            <td>Категория</td>
+            <td>Количество</td>
+            <td>Цена</td>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td>{{product.product_name}}</td>
+            <td>{{product.description|truncatechars:15}}</td>
+            <td>{{product.category}}</td>
+            <td>{{product.quantity}}</td>
+            <td>{{product.price}}</td>
+        </tr>
+        {% endfor %}
+</table>
+{% endif %}
+    {% if page_obj.has_previous  %}
+        <a href="?{% url_replace page=1%}">1</a>
+        {% if page_obj.previous_page_number != 1 %}
+            ...
+        <a href="?{% url_replace page=page_obj.previous_page_number %}">{{page_obj.previous_page_number}}</a>
+        {% endif %}
+    {% endif %}
+
+    {{ page_obj.number }}
+    {% if page_obj.has_next %}
+        <a href="?{% url_replace page=page_obj.next_page_number %}">{{page_obj.next_page_number}}</a>
+        {% if paginator.num_pages != page_obj.next_page_number  %}
+            ...
+        <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{page_obj.paginator.num_pages}}</a>
+        {% endif %}
+    {% endif %}
+
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends 'flatpages/default.html'%}
+
+{% block content%}
+<table>
+    <tr>
+        <td><h3>Все Категории</h3><hr></td>
+    </tr>
+    {% for ct in category%}
+    <tr>
+        <td>{{ct.name}}</td>
+        <td>
+            {% if request.user in ct.subscribers.all %}
+            <a href="{% url 'unsubscribe' ct.id%}">Отписаться</a>
+            {% else %}
+            <a href="{% url 'subscribe' ct.id%}">Подписаться</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock content%}
