@@ -2,8 +2,10 @@ from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.shortcuts import redirect
+from django.core.mail import send_mail
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .forms import ProductForm
 from .models import Product, Category
@@ -69,9 +71,11 @@ def subscribe(request, pk):
     category.subscribers.add(user)
     return redirect('category_list')
 
+
 @login_required
 def unsubscribe(request, pk):
     user = request.user
     category = Category.objects.get(pk=pk)
     category.subscribers.remove(user)
     return redirect('category_list')
+

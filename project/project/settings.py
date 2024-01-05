@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = 'django-insecure-s_37$e)9l@du@e3%js5ot+!m@d&^a_z3rby68fguht!iz00($c
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
-
 
 # Application definition
 
@@ -42,24 +40,13 @@ INSTALLED_APPS = [
     'django_filters',
     'app',
     'sign',
-    'appointment',
+    'appointment.apps.AppointmentConfig',
     'protect',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'django_apscheduler',
 ]
-
-LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/'
-SITE_ID = 1
-
-ACCOUNT_FORMS = {'signup': 'sign.models.BasicSignupForm'}
-
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -70,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+
     'allauth.account.middleware.AccountMiddleware',
 ]
 
@@ -77,7 +65,6 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
-
 
 ROOT_URLCONF = 'project.urls'
 
@@ -98,7 +85,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'project.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -108,7 +94,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -128,7 +113,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -139,7 +123,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -155,7 +138,19 @@ STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
 
-# DEFAULT_FROM_EMAIL = 'osmert1o@yandex.ru'
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
+SITE_ID = 1
+
+ACCOUNT_FORMS = {'signup': 'sign.models.BasicSignupForm'}
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
 
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
@@ -163,4 +158,6 @@ EMAIL_HOST_USER = 'osmert1o'
 EMAIL_HOST_PASSWORD = 'kainskay11'
 EMAIL_USE_SSL = True
 
+
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER + '@yandex.ru'
+

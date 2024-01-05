@@ -17,7 +17,8 @@ class BaseRegisterForm(UserCreationForm):
                   'surname',
                   'email',
                   'password1',
-                  'password2',)
+                  'password2',
+                  )
 
 
 class BasicSignupForm(SignupForm):
@@ -27,4 +28,5 @@ class BasicSignupForm(SignupForm):
         basic_group = Group.objects.get(name='basic')
         basic_group.user_set.add(user)
         return user
+
 

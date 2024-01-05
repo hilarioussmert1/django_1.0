@@ -17,12 +17,4 @@ class AppointmentView(View):
         )
         appointment.save()
 
-        send_mail(
-            subject=f'{appointment.client_name} {appointment.date.strftime("%Y-%m-%d")}',
-            message=appointment.message,
-            from_email='',
-            recipient_list=['ivangrigorev2817@gmail.com']
-        )
-
-        return redirect('appointment:appoint')
-
+        return redirect('product_list')
